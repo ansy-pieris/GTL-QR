@@ -1,0 +1,35 @@
+<!-- Tells the browser this is a modern HTML page -->
+<!doctype html>
+<!-- Start of the page; language set to English -->
+<html lang="en">
+  <!-- The head holds settings and info about the page (not shown on screen) -->
+  <head>
+    <!-- Lets the page show all characters and symbols correctly -->
+    <meta charset="UTF-8" />
+    <!-- Your logo as the small icon in the browser tab -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Your logo as the icon when someone saves the page to an iPhone home screen -->
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- Makes the page fit phone screens properly instead of looking zoomed out -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Colours the phone browser's top bar dark green to match the page -->
+    <meta name="theme-color" content="#022c22" />
+    <!-- Short description shown by Google and when the link is shared -->
+    <meta name="description" content="Connect with GTL Lanka on our website and social media." />
+    <!-- Connects early to Google Fonts so the font loads faster -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Connects early to the server that sends the font files -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Loads the Plus Jakarta Sans font in the weights we use (400 to 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- The text shown on the browser tab -->
+    <title>GTL Lanka | Connect with us</title>
+  </head>
+  <!-- The body is the visible part of the page -->
+  <body>
+    <!-- React puts the whole app inside this empty box -->
+    <div id="root"></div>
+    <!-- Loads the code that starts the React app -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
