@@ -147,7 +147,7 @@ function App() {
             {/* Short description in soft, slightly see-through light green */}
             <p className="mt-4 max-w-sm text-sm text-emerald-100/70 sm:text-base">
               {/* The description text */}
-              Follow GTL Lanka for the latest updates, news and offers. Tap any link to visit us.
+              Stay connected with Global Park! Follow our social media pages to keep up with our latest news, updates and milestones.
             </p>
           </motion.div>
         </section>
