@@ -7,6 +7,9 @@ import { LiquidGlassLogo } from './components/liquid-glass-logo'
 // Brings in the list of links we made in links.js
 import links from './links'
 
+// The company website address, used by the logo and the company name badge
+const websiteUrl = 'https://www.gtllanka.com/'
+
 // Animation settings for the whole list of buttons
 const listAnimation = {
   // Starting state: nothing special needed for the list itself
@@ -45,45 +48,59 @@ function App() {
         <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-green-300/10 blur-3xl" />
       </div>
 
-      {/* Main content area: grows to fill the screen; stacked on phones, side by side on large screens */}
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center gap-10 px-5 py-10 sm:px-8 lg:flex-row lg:justify-between lg:gap-16">
+      {/* Main content area: starts at the top on phones (small top padding); side by side and centred on large screens */}
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-start gap-10 px-5 pb-10 pt-4 sm:px-8 lg:flex-row lg:justify-between lg:gap-16 lg:py-10">
         {/* Brand side (not animated itself): holds the logo and the animated text */}
         <section className="flex flex-col items-center text-center lg:max-w-md lg:items-start lg:text-left">
-          {/* Wrapper so the glow can sit behind the logo; negative bottom margin pulls the text up closer */}
-          <div className="relative -mb-10">
+          {/* Wrapper for the logo: pulled up a little (-mt-6) and the text pulled closer below (-mb-6) */}
+          <div className="relative -mb-6 -mt-6">
             {/* Soft round green glow behind the logo (smaller than the box so no edges show) */}
             <div className="absolute inset-10 rounded-full bg-emerald-400/40 blur-2xl" />
-            {/* Plain see-through box that sets the logo's size: bigger on each larger screen */}
-            <div className="relative h-56 w-56 sm:h-64 sm:w-64 lg:h-100 lg:w-100">
-              {/* The liquid glass logo animation (runs on its own, no fade-in) */}
-              <LiquidGlassLogo
-                // Your logo file from the public folder
-                logo="/logo.png"
-                // The animation finishes on the logo alone (not a text wordmark)
-                ending="logo"
-                // Dark style to suit the dark green page
-                theme="dark"
-                // Logo shown at full size inside the tile
-                logoScale={1}
-                // Keep the logo's own colours
-                logoColor="original"
-                // Colour of the glass tile
-                tileColor="#6e9db3"
-                // See-through background so the page's green shows behind the logo
-                background="transparent"
-                // How quickly the ripple effect fades out
-                decay={1.5}
-                // Plays at half speed for a smooth, calm effect
-                speed={0.5}
-                // Fills the full height of its box
-                height="100%"
-                // Name read out by screen readers
-                aria-label="GTL logo"
-              />
-            </div>
+            {/* Link around the logo: opens the website in a new tab */}
+            <a
+              // The website address set at the top of the file
+              href={websiteUrl}
+              // Open the site in a new tab so this page stays open
+              target="_blank"
+              // Safety setting that should always go with target="_blank"
+              rel="noopener noreferrer"
+              // Text read out by screen readers for this link
+              aria-label="Visit the GTL Lanka website"
+              // Makes the link a block that sits above the glow
+              className="relative block"
+            >
+              {/* Plain see-through box that sets the logo's size: bigger on each larger screen */}
+              <div className="h-56 w-56 sm:h-64 sm:w-64 lg:h-100 lg:w-100">
+                {/* The liquid glass logo animation (runs on its own, no fade-in) */}
+                <LiquidGlassLogo
+                  // Your logo file from the public folder
+                  logo="/logo.png"
+                  // The animation finishes on the logo alone (not a text wordmark)
+                  ending="logo"
+                  // Dark style to suit the dark green page
+                  theme="dark"
+                  // Logo shown at full size inside the tile
+                  logoScale={1}
+                  // Keep the logo's own colours
+                  logoColor="original"
+                  // Colour of the glass tile
+                  tileColor="#6e9db3"
+                  // See-through background so the page's green shows behind the logo
+                  background="transparent"
+                  // How quickly the ripple effect fades out
+                  decay={1.5}
+                  // Plays at half speed for a smooth, calm effect
+                  speed={0.5}
+                  // Fills the full height of its box
+                  height="100%"
+                  // Name read out by screen readers
+                  aria-label="GTL logo"
+                />
+              </div>
+            </a>
           </div>
 
-          {/* Animated box for the text only: fades in and slides up slowly */}
+          {/* Animated box for the text only: sits on a higher layer (z-10) so the logo animation never covers it */}
           <motion.div
             // Start invisible and 20px lower
             initial={{ opacity: 0, y: 20 }}
@@ -91,16 +108,25 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             // Takes 1.2 seconds, after waiting 0.3 seconds
             transition={{ duration: 1.2, delay: 0.3 }}
-            // Stack the text pieces; centred on phones, left-aligned on large screens
-            className="flex flex-col items-center lg:items-start"
+            // Higher layer than the logo; stack the text pieces; centred on phones, left-aligned on large screens
+            className="relative z-10 flex flex-col items-center lg:items-start"
           >
-            {/* Small pill-shaped badge above the slogan */}
-            <span className="mt-0 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm font-semibold uppercase tracking-widest text-emerald-200">
+            {/* Pill-shaped company name badge that links to the website; gets brighter on hover */}
+            <a
+              // The website address set at the top of the file
+              href={websiteUrl}
+              // Open the site in a new tab so this page stays open
+              target="_blank"
+              // Safety setting that should always go with target="_blank"
+              rel="noopener noreferrer"
+              // Pill shape, soft green glass look, brighter background and border on hover
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm font-semibold uppercase tracking-widest text-emerald-200 transition-colors duration-300 hover:border-emerald-300 hover:bg-emerald-400/25"
+            >
               {/* Small glowing dot that pulses */}
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
               {/* Badge text */}
               Global Transportation & Logistics Pvt Ltd
-            </span>
+            </a>
             {/* The slogan: always one line (never wraps), italic, light green, grows on bigger screens */}
             <p className="mt-3 whitespace-nowrap text-sm font-semibold italic tracking-wide text-emerald-300 sm:text-lg lg:text-xl">
               {/* The slogan text */}
