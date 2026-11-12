@@ -4,11 +4,25 @@ import { motion } from 'motion/react'
 import { FiArrowUpRight } from 'react-icons/fi'
 // Brings in the liquid glass logo animation we added with shadcn
 import { LiquidGlassLogo } from './components/liquid-glass-logo'
+// Brings in the logo file from src/assets so Vite bundles it into the assets folder when building
+import logoUrl from './assets/logo.png'
 // Brings in the list of links we made in links.js
 import links from './links'
 
 // The company website address, used by the logo and the company name badge
 const websiteUrl = 'https://www.gtllanka.com/'
+
+// Checks once whether this browser supports WebGL 2 (needed for the liquid glass effect)
+const supportsWebGL2 = (() => {
+  // Try the check safely so an error never breaks the page
+  try {
+    // Make a temporary drawing area and ask it for WebGL 2; true if it works
+    return !!document.createElement('canvas').getContext('webgl2')
+  } catch {
+    // If anything goes wrong, treat it as not supported
+    return false
+  }
+})()
 
 // Animation settings for the whole list of buttons
 const listAnimation = {
@@ -69,33 +83,46 @@ function App() {
               // Makes the link a block that sits above the glow
               className="relative block"
             >
-              {/* Plain see-through box that sets the logo's size: bigger on each larger screen */}
-              <div className="h-56 w-56 sm:h-64 sm:w-64 lg:h-100 lg:w-100">
-                {/* The liquid glass logo animation (runs on its own, no fade-in) */}
-                <LiquidGlassLogo
-                  // Your logo file from the public folder
-                  logo="/logo.png"
-                  // The animation finishes on the logo alone (not a text wordmark)
-                  ending="logo"
-                  // Dark style to suit the dark green page
-                  theme="dark"
-                  // Logo shown at full size inside the tile
-                  logoScale={1}
-                  // Keep the logo's own colours
-                  logoColor="original"
-                  // Colour of the glass tile
-                  tileColor="#6e9db3"
-                  // See-through background so the page's green shows behind the logo
-                  background="transparent"
-                  // How quickly the ripple effect fades out
-                  decay={1.5}
-                  // Plays at half speed for a smooth, calm effect
-                  speed={0.5}
-                  // Fills the full height of its box
-                  height="100%"
-                  // Name read out by screen readers
-                  aria-label="GTL logo"
-                />
+              {/* Plain see-through box that sets the logo's size; centres the backup image; bigger on each larger screen */}
+              <div className="flex h-56 w-56 items-center justify-center sm:h-64 sm:w-64 lg:h-100 lg:w-100">
+                {/* If the browser supports WebGL 2, show the liquid glass logo; otherwise show the normal logo image */}
+                {supportsWebGL2 ? (
+                  // The liquid glass logo animation (runs on its own, no fade-in)
+                  <LiquidGlassLogo
+                    // The bundled logo file (Vite fills in its real address when building)
+                    logo={logoUrl}
+                    // The animation finishes on the logo alone (not a text wordmark)
+                    ending="logo"
+                    // Dark style to suit the dark green page
+                    theme="dark"
+                    // Logo shown at full size inside the tile
+                    logoScale={1}
+                    // Keep the logo's own colours
+                    logoColor="original"
+                    // Colour of the glass tile
+                    tileColor="#6e9db3"
+                    // See-through background so the page's green shows behind the logo
+                    background="transparent"
+                    // How quickly the ripple effect fades out
+                    decay={1.5}
+                    // Plays at half speed for a smooth, calm effect
+                    speed={0.5}
+                    // Fills the full height of its box
+                    height="100%"
+                    // Name read out by screen readers
+                    aria-label="GTL logo"
+                  />
+                ) : (
+                  // Backup: the plain logo image, shown when the liquid glass effect can't run
+                  <img
+                    // The same bundled logo file
+                    src={logoUrl}
+                    // Text read out by screen readers or shown if the image fails to load
+                    alt="GTL logo"
+                    // About two-thirds of the box, keeps its shape, round with a soft shadow
+                    className="h-2/3 w-2/3 rounded-full object-contain shadow-2xl"
+                  />
+                )}
               </div>
             </a>
           </div>
@@ -217,7 +244,7 @@ function App() {
       {/* Footer that always sits at the bottom of the screen */}
       <footer className="relative z-10 border-t border-white/10 py-5 text-center text-xs text-emerald-100/50">
         {/* Shows © plus the current year automatically, then the company name */}
-        © {new Date().getFullYear()} GTL Lanka. All rights reserved.
+        © {new Date().getFullYear()} Global Park. All rights reserved.
       </footer>
     </main>
   )

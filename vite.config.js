@@ -9,6 +9,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 // Exports the settings Vite uses when running and building the project
 export default defineConfig({
+  // Use relative paths so the site works at the top level or inside any folder on the server
+  base: './',
   // List of plugins Vite should use: React first, then Tailwind
   plugins: [react(), tailwindcss()],
   // Settings for how Vite finds files in import lines
